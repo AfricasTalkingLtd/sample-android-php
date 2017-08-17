@@ -18,4 +18,6 @@ cd android
 gradle installDebug
 ```
 
-![](android/screenshot.png =250x)
+**And Voilà!**
+
+<img src="android/screenshot.png" width="25%">
