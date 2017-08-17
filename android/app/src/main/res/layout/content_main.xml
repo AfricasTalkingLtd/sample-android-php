@@ -42,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="NGN 671"
+                android:layout_marginLeft="10dp"
                 android:textSize="15sp"/>
 
             <TextView

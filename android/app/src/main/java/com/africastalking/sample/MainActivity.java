@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnSendAirtime)
-    public void sendAirtime() {
+    public void sendAirtime(final View button) {
         String amount = txtAmount.getText().toString();
         Pattern p = Pattern.compile("^[a-zA-Z]{3} \\d+(:?\\.\\d+)?$");
         Matcher m = p.matcher(amount);
@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         progress.setVisibility(View.VISIBLE);
+        button.setEnabled(false);
+        txtAirtimeRecipients.setEnabled(false);
+        txtAmount.setEnabled(false);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
@@ -129,6 +132,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
+                        txtAirtimeRecipients.setEnabled(true);
+                        txtAmount.setEnabled(true);
+                        button.setEnabled(true);
                         Snackbar.make(fab, e.getMessage() + "", Snackbar.LENGTH_LONG).show();
                     }
                 });
@@ -141,8 +147,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
+                        button.setEnabled(true);
+                        txtAirtimeRecipients.setEnabled(true);
+                        txtAmount.setEnabled(true);
                         if (response.isSuccessful()) {
-                            Snackbar.make(fab, "Airtime was successfully sent!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(fab, "We got a response!", Snackbar.LENGTH_LONG).show();
                         } else {
                             Snackbar.make(fab, response.message(), Snackbar.LENGTH_LONG).show();
                         }
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnSendSMS)
-    public void sendSms() {
+    public void sendSms(final View button) {
 
         String message = txtSmsMessage.getText().toString();
         if (TextUtils.isEmpty(message)) {
@@ -178,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         progress.setVisibility(View.VISIBLE);
+        button.setEnabled(false);
+        txtSmsMessage.setEnabled(false);
+        txtSmsRecipients.setEnabled(false);
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
@@ -185,6 +197,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
+                        button.setEnabled(true);
+                        txtSmsMessage.setEnabled(true);
+                        txtSmsRecipients.setEnabled(true);
                         Snackbar.make(fab, e.getMessage() + "", Snackbar.LENGTH_LONG).show();
                     }
                 });
@@ -197,8 +212,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         progress.setVisibility(View.GONE);
+                        button.setEnabled(true);
+                        txtSmsMessage.setEnabled(true);
+                        txtSmsRecipients.setEnabled(true);
                         if (response.isSuccessful()) {
-                            Snackbar.make(fab, "Message was sent successfully!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(fab, "We got a response!", Snackbar.LENGTH_LONG).show();
                         } else {
                             Snackbar.make(fab, response.message(), Snackbar.LENGTH_LONG).show();
                         }

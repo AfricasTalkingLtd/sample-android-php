@@ -10,6 +10,9 @@ $API_KEY  = "766ec9a0969a8a994a894c26e992e3333211d37836d2488c24d3e37266643ab4";
 $gateway = new AfricasTalkingGateway($USERNAME, $API_KEY, "sandbox");
 $router = new AltoRouter();
 
+// You can (SHOULD) implement your authentication here...
+
+
 /** Send SMS **/
 $router->map('POST', '/send/sms', function() {
   global $gateway;
