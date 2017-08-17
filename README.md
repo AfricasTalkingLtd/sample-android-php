@@ -6,6 +6,7 @@
 **Start the backend server**
 
 ```shell
+# set your app username and api key in backend/index.php
 cd backend
 php -S 192.168.0.15:3000
 ```
