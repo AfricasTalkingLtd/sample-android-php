@@ -18,3 +18,4 @@ cd android
 gradle installDebug
 ```
 
+![](./android/screenshot.png | =250x)
