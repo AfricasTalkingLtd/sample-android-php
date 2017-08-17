@@ -4,8 +4,8 @@ require 'vendor/autoload.php';
 require 'AfricasTalkingGateway.php';
 
 /** Setup **/
-$USERNAME = "sandbox";
-$API_KEY  = "766ec9a0969a8a994a894c26e992e3333211d37836d2488c24d3e37266643ab4";
+$USERNAME = "YOUR_USERNAME";
+$API_KEY  = "YOUR_API_KEY";
 
 $gateway = new AfricasTalkingGateway($USERNAME, $API_KEY, "sandbox");
 $router = new AltoRouter();
