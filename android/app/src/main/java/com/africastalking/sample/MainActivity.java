@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                Log.i("Airtime Response", response.body().string() + "");
+                Log.e("Airtime Response", response.body().string() + "");
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                Log.i("Sms Response", response.body().string() + "");
+                Log.e("Sms Response", response.body().string() + "");
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
