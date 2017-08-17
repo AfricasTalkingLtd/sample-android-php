@@ -3,21 +3,25 @@ package com.africastalking.sample;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,20 +36,37 @@ public class MainActivity extends AppCompatActivity {
     // Http Client
     OkHttpClient client = new OkHttpClient();
 
+    static final String BACKEND_URL = BuildConfig.BACKEND_URL;
+
     @BindView(R.id.txtAmount)
     EditText txtAmount;
 
     @BindView(R.id.txtAirtimeRecipients)
     EditText txtAirtimeRecipients;
 
+    @BindView(R.id.txtSmsRecipients)
+    EditText txtSmsRecipients;
+
+    @BindView(R.id.txtMessage)
+    EditText txtSmsMessage;
+
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.progress)
+    ProgressBar progress;
+
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +84,8 @@ public class MainActivity extends AppCompatActivity {
                         }).show();
             }
         });
+
+        handler = new Handler();
 
     }
 
@@ -94,25 +117,96 @@ public class MainActivity extends AppCompatActivity {
                 .add("recipients", params.toString())
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.1.39:4646")
+                .url(BACKEND_URL + "/send/airtime")
                 .post(formBody)
                 .build();
 
+        progress.setVisibility(View.VISIBLE);
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Snackbar.make(fab, e.getMessage() + "", Snackbar.LENGTH_LONG).show();
+            public void onFailure(Call call, final IOException e) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        Snackbar.make(fab, e.getMessage() + "", Snackbar.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Snackbar.make(fab, "Success!", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(fab, response.message(), Snackbar.LENGTH_LONG).show();
-                }
+            public void onResponse(Call call, final Response response) throws IOException {
+                Log.i("Airtime Response", response.body().string() + "");
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        if (response.isSuccessful()) {
+                            Snackbar.make(fab, "Airtime was successfully sent!", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(fab, response.message(), Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         });
+    }
+
+    @OnClick(R.id.btnSendSMS)
+    public void sendSms() {
+
+        String message = txtSmsMessage.getText().toString();
+        if (TextUtils.isEmpty(message)) {
+            Snackbar.make(fab, "Invalid message", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        String recipients = txtSmsRecipients.getText().toString();
+        if (TextUtils.isEmpty(recipients)) {
+            Snackbar.make(fab, "Invalid recipients", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        RequestBody formBody = new FormBody.Builder()
+                .add("recipients", recipients)
+                .add("message", message)
+                .build();
+        Request request = new Request.Builder()
+                .url(BACKEND_URL + "/send/sms")
+                .post(formBody)
+                .build();
+
+
+        progress.setVisibility(View.VISIBLE);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, final IOException e) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        Snackbar.make(fab, e.getMessage() + "", Snackbar.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+                Log.i("Sms Response", response.body().string() + "");
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.setVisibility(View.GONE);
+                        if (response.isSuccessful()) {
+                            Snackbar.make(fab, "Message was sent successfully!", Snackbar.LENGTH_LONG).show();
+                        } else {
+                            Snackbar.make(fab, response.message(), Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     @Override
