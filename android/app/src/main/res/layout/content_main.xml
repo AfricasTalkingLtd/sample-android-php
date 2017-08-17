@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.africastalking.sample.MainActivity"
+    tools:showIn="@layout/activity_main"
+    android:padding="5dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/airtime"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/amount"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <EditText
+                android:id="@+id/txtAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="NGN 671"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/to"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+            <EditText
+                android:id="@+id/txtAirtimeRecipients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="+2349175363033"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"/>
+
+
+            <Button
+                android:id="@+id/btnSendAirtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#c5c5c5"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sms"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/to"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+            <EditText
+                android:id="@+id/txtSmsRecipients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="+2348160663047"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/message"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            <EditText
+                android:id="@+id/txtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:maxLines="50"
+                android:gravity="top"
+                android:hint="@string/hi_there"
+                android:textSize="15sp"
+                android:layout_marginLeft="10dp"/>
+
+            <Button
+                android:id="@+id/btnSendSMS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</ScrollView>
