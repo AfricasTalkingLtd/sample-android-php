@@ -1,6 +1,6 @@
 # Android + PHP + AfricasTalking
 
-> Simple demo setting up SMS and Airtime from and Android app using a PHP backend and Africa's Talking API
+> Simple demo setting up SMS and Airtime from an Android app using a PHP backend and Africa's Talking API
 
 
 **Start the backend server**
